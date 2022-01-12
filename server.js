@@ -1,3 +1,4 @@
+// get express server up and running
 const express = require('express')
 const connectDB = require('./config/db')
 
@@ -16,6 +17,7 @@ app.use('/api/auth', require('./routes/api/auth'))
 app.use('/api/profile', require('./routes/api/profile'))
 app.use('/api/posts', require('./routes/api/posts'))
 
+// looks for port environment variable
 const PORT = process.env.PORT || 5000
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
