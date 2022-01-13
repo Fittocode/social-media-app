@@ -1,6 +1,10 @@
 // get express server up and running
 const express = require('express')
 const connectDB = require('./config/db')
+const usersRouter = require('./routes/api/users')
+const authRouter = require('./routes/api/auth')
+const profileRouter = require('./routes/api/profile')
+const postsRouter = require('./routes/api/posts')
 
 const app = express()
 
@@ -10,16 +14,13 @@ connectDB()
 // Init Middleware
 app.use(express.json({extended: false}))
 
-app.use((req, res, next) => {
-    console.log('hello world')
-})
 
 app.get('/', (req, res) => res.send('API Running'))
 
-app.use('/api/users', require('./routes/api/users'))
-app.use('/api/auth', require('./routes/api/auth'))
-app.use('/api/profile', require('./routes/api/profile'))
-app.use('/api/posts', require('./routes/api/posts'))
+app.use('/api/users', usersRouter)
+app.use('/api/auth', authRouter)
+app.use('/api/profile', profileRouter)
+app.use('/api/posts', postsRouter)
 
 // looks for port environment variable
 const PORT = process.env.PORT || 5000
@@ -27,8 +28,6 @@ const PORT = process.env.PORT || 5000
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
 
 console.log('test')
-
-
 
 // app.get vs router.get 
 

@@ -1,5 +1,4 @@
 const express = require('express')
-const router = express.Router()
 const gravatar = require('gravatar')
 const bcrypt = require('bcryptjs')
 const { check, validationResult } = require('express-validator')
@@ -10,7 +9,8 @@ const User = require('../../models/User')
 // @desc    Register user
 // @access  Public 
 
-router.post('/', [
+const usersRouter = express.Router()
+usersRouter.post('/', [
     check('name', 'Name is required').not().isEmpty(),
     check('email', 'Please include a valid email').isEmail(),
     check('password', 'Please enter a password with 6 or more characters').isLength({ min: 6 })
@@ -59,4 +59,4 @@ async (req, res) => {
     }
 })
 
-module.exports = router;
+module.exports = usersRouter;
