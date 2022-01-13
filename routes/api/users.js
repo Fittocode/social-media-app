@@ -27,7 +27,7 @@ async (req, res) => {
         let user = await User.findOne({ email })
 
         if (user) {
-            res.status(400).json({errors: [ { msg: "User already exists"}]})
+            return res.status(400).json({errors: [ { msg: "User already exists"}]})
         }
 
         const avatar = gravatar.url(email, {
@@ -43,15 +43,14 @@ async (req, res) => {
             password
         })
 
-        const salt = await bcrypt.genSalt(10);
-
-        user.password = await bcrypt.hash(password, salt)
+        user.password = await bcrypt.hash(password.toString(), 10)
 
         await user.save()
 
         // Return jsonwebtoken
 
     console.log(req.body)
+    console.log(user.password)
     res.send('User registered')
 
     } catch(err) {
